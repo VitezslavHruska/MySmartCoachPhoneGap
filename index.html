@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>MySmartCoach - osobní trener</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="MySmartCoach - Osobní mobilní trenér" />
+    <meta name="keywords" content="trénink, sport, trenér, běh" />
+    <meta name="author" content="Vitezslav Hruska" />
+    <meta name="robots" content="all" />
+    <meta name="rating" content="general" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="main.js"></script>
+
+</head>
+<body onload="init();">
+    <form id="homepage_form" runat="server">
+    <div>
+        <div data-role="page" id="home">
+            <div data-role="header">
+                <h1>aMySmartCoach</h1>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" data-inset="true">
+                    <li>
+                        <a href="#calculator">
+                            <img src="images/calc.png" />
+                            <h3>Sportovní kalkulačka</h3>
+                            <p>Vypočítejte si své BMI a tréninkové zóny</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div data-role="page" id="calculator">
+            <div data-role="header">
+                <h1>Sportovní kalkulačka</h1>
+                <a href="#home" data-icon="home" data-iconpos="notext" >Home Button</a>
+            </div>
+            <div data-role="content">
+                <div data-role="collapsible-set" data-content-theme="d">
+			        <div data-role="collapsible">
+                        <h3>BMI</h3>
+                        <div data-role="fieldcontain">
+                            <label for="weight_slider">Vaše váha v kg:</label>
+                            <input type="range" name="weight_slider" id="weight_slider" value="70" min="0" max="200" />
+                        </div>
+                        <div data-role="fieldcontain">
+                            <label for="height_slider">Vaše výška v cm:</label>
+                            <input type="range" name="height_slider" id="height_slider" value="160" min="0" max="250" />
+                        </div>
+                        <a href="#bmi_overview" data-role="button" data-theme="b" onclick="calculateBMI();" >Vypočítat</a>
+                    </div>    
+                    <div data-role="collapsible">      
+                        <h3>Tepová frekvence</h3>
+                        <div data-role="fieldcontain">
+                            <label for="age_slider">Váš věk:</label>
+                            <input type="range" name="age_slider" id="age_slider" value="35" min="1" max="100" />
+                        </div>
+                        <div data-role="fieldcontain">
+                            <fieldset data-role="controlgroup">
+						    	<legend>Vaše pohlaví:</legend>
+						         	<input type="radio" name="radio_gender" id="radio_choice_men" value="men" checked="checked" />
+						         	<label for="radio_choice_men">Muž</label>
+			
+						         	<input type="radio" name="radio_gender" id="radio_choice_woman" value="women"  />
+						         	<label for="radio_choice_woman">Žena</label>
+						    </fieldset>
+                        </div>
+                        <a href="#heartrate_overview" data-role="button" data-theme="b" onclick="calculateHR()" >Vypočítat</a>
+                    </div>        
+                </div>
+            </div>
+        </div>
+        
+        <div data-role="page" id="bmi_overview">
+            <div data-role="header">
+                <h1>Vaše bmi</h1>
+                <a href="#home" data-icon="home" data-iconpos="notext" >Home Button</a>
+            </div>
+            <div data-role="content">
+                <h2>Vaše BMI: <span id="your_bmi"> &nbsp;</span></h2>
+			    <ul data-role="listview">
+				    <li>
+				        <img src="images/calc.png" />
+				        <h3>(0 - 18.4) Podváha</h3>
+				        <p>Při BMI nižším než 18,4 je důležité věnovat dostatečnou pozornost výživě a celkovému zdravotnímu stavu!</p>
+			        </li>
+			        <li>
+				        <img src="images/calc.png" />
+				        <h3>(18.5 - 24.9) Normální hmotnost</h3>
+				        <p>Normální hmotnosti, které je považováno za pásmo s minimem zdravotních komplikací spojených s ukládáním tukové tkáně.</p>
+			        </li>
+			        <li>
+				        <img src="images/calc.png" />
+				        <h3>(25 - 29.9) Nadváha</h3>
+				        <p>Pásmo nadváhy, ve kterém je mírně zvýšené riziko vzniku onemocnění souvisejících s větším množstvím tukové tkáně.</p>
+			        </li>
+			        <li>
+				        <img src="images/calc.png" />
+				        <h3>(30 - 34.9) Obezita I.stupně</h3>
+				        <p>Zmnožení tukové tkáně ve Vašem případě již překročilo fyziologickou mez a je jen otázkou času, kdy a v jakém rozsahu se objeví zdravotní komplikace.</p>
+			        </li>
+			        <li>
+				        <img src="images/calc.png" />
+				        <h3>(35 - 39.9) Obezita II.stupně</h3>
+				        <p>Nacházíte se v pásmu obezity II.stupně, kdy se zmnožení tukové tkáně již musí negativně projevovat na Vašem zdraví.</p>
+			        </li>
+			        <li>
+				        <img src="images/calc.png" />
+				        <h3>(40 - více) Obezita III.stupně</h3>
+				        <p>Jste v pásmukdy zmnožení tukové tkáně nejen způsobuje řadu závažných zdravotních komplikací, ale máte vysoké riziko pro nejzávažnější onemocnění.</p>
+			        </li>
+			    </ul>
+            </div>
+        </div>
+        
+        <div data-role="page" id="heartrate_overview">
+            <div data-role="header">
+                <h1>Vaše bmi</h1>
+                <a href="#home" data-icon="home" data-iconpos="notext" >Home Button</a>
+            </div>
+            <div data-role="content">
+                <h2>Vaše TF max: <span id="your_heartrate" ></span></h2>
+			    <ul data-role="listview">
+				    <li>
+				        <img src="images/calc.png" />
+				        <h3><span id="lt_zone1_min" ></span> - <span id="lt_zone1_max" ></span> tepů</h3>
+				        <p><strong>Lehká intenzita </strong></p>
+				        <p>Může vést ke zlepšení fyzické kondice u lidí s velmi špatnou kondicí.</p>
+			        </li>
+			        <li>
+				        <img src="images/calc.png" />
+				        <h3><span id="lt_zone2_min" ></span> - <span id="lt_zone2_max" ></span> tepů</h3>
+				        <p><strong>Lehká až střední intenzita</strong></p>
+				        <p>Zvyšuje kardiovaskulární kapacitu svalů, šlach, vazů - zvyšuje vytrvalost, zlepšení zdravotního stavu, regulace váhy.</p>
+			        </li>
+			        <li>
+				        <img src="images/calc.png" />
+				        <h3><span id="lt_zone3_min" ></span> - <span id="lt_zone3_max" ></span> tepů</h3>
+				        <p><strong>Střední až těžká intenzita</strong></p>
+				        <p>Zlepšení kardiovaskulární kondice, zvyšuje vytrvalost, tělo přivyká vyššímu tempu.</p>
+			        </li>
+			        <li>
+				        <img src="images/calc.png" />
+				        <h3><span id="lt_zone4_min" ></span> - <span id="lt_zone4_max" ></span> tepů</h3>
+				        <p><strong>Těžká až maximální intenzita</strong></p>
+				        <p>Zvyšuje odolnost proti vytváření kys. mléčné, vylepšuje jednorázový výkon, cvičení v aerobní zóně.</p>
+			        </li>
+			    </ul>
+            </div>
+        </div>
+        
+    </div>
+    </form>
+</body>
+</html>
